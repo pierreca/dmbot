@@ -1,0 +1,19 @@
+{
+  "name": "azure-iot-dmbot",
+  "version": "0.0.1",
+  "description": "Device Management bot for Azure IoT Hub",
+  "main": "console_bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierreca/dmbot.git"
+  },
+  "author": "Pierre Cauchois",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^0.9.1",
+    "moment": "^2.13.0"
+  }
+}
