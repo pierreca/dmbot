@@ -1,3 +1,6 @@
 {
-    "luisEndpoint": "https://api.projectoxford.ai/luis/v1/application?id=f43d411d-5c80-4331-9708-99e19b6ef7f1&subscription-key=bebd241d0f204bed89d405c939224446"
+    "luisAppId": "<LUIS APP ID>",
+    "luisSubscriptionKey": "<LUIS SUBSCRIPTION KEY>",
+    "storageConnectionString": "<STORAGE CONNECTION STRING>",
+    "iothubConnectionString": "<IOTHUB_CONNECTION_STRING>"
 }

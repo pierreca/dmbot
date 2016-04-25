@@ -13,6 +13,9 @@
   "author": "Pierre Cauchois",
   "license": "MIT",
   "dependencies": {
+    "azure-iothub": "^1.0.5",
+    "azure-storage": "^0.10.0",
+    "bluebird": "^3.3.5",
     "botbuilder": "^0.9.1",
     "moment": "^2.13.0"
   }
