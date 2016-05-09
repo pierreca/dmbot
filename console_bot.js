@@ -113,6 +113,17 @@ bot.add('/schedulejob', [
         if (results.response) {
             session.dialogData.jobType = results.response;
         }
+        
+        if (session.dialogData.jobType === 'Job::FirmwareUpdateJob') {
+            builder.Prompts.text(session, 'What\s the URL for the new firmware?');
+        } else {
+            next();
+        }
+    },
+    function (session, results, next) {
+        if(session.dialogData.jobType === 'Job::FirmwareUpdateJob' && results.response) {
+            session.dialogData.firmwareUrl = results.response;
+        }
 
         if (!session.dialogData.targetTime) {
             builder.Prompts.time(session, 'At what time would you like the ' + session.dialogData.jobType + ' to run?');

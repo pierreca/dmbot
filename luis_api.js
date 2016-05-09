@@ -75,8 +75,24 @@ LuisApi.prototype.getPhraseListByName = function(phraseListName) {
           result = phraseList;
         }
       });
+      
       resolve(result);
     }).catch(function (err) {
+      reject(err);
+    });
+  });
+};
+
+LuisApi.prototype.createOrUpdatePhraseList = function(name, values) {
+  var self = this;
+  return new Promise(function (resolve, reject) {
+    self.getPhraseListByName(name).then(function(phraseList) {
+      if (phraseList) {
+        self.updatePhraseList(name, values).then(resolve);
+      } else {
+        self.createPhraseList(name, values).then(resolve);
+      } 
+    }).catch(function(err) {
       reject(err);
     });
   });
@@ -86,7 +102,6 @@ LuisApi.prototype.updatePhraseList = function(name, values) {
   var self = this;
   return new Promise(function (resolve, reject) {
     self.getPhraseListByName(name).then(function(phraseList) {
-      
       var content = JSON.stringify({
         Id: phraseList.Id,
         Name: phraseList.Name,
@@ -106,6 +121,51 @@ LuisApi.prototype.updatePhraseList = function(name, values) {
         hostname: self.endpoints.hostname,
         path: self.endpoints.phraselists + '/' + phraseList.Id,
         method: 'PUT',
+        headers: headers
+      };
+
+      self._makeHttpRequest(options, content)
+          .then(resolve)
+          .catch(reject);
+    }).catch(function(err) {
+      reject(err);
+    });
+  });
+};
+
+
+LuisApi.prototype.getNextPhraseListId = function () {
+  var self = this;
+  return new Promise(function (resolve, reject) {
+    self.getPhraseLists().then(function(phraseLists) {
+      resolve (phraseLists[phraseLists.length - 1].Id + 1);
+    })
+  });
+};
+
+LuisApi.prototype.createPhraseList = function(name, values) {
+  var self = this;
+  return new Promise(function (resolve, reject) {
+    self.getNextPhraseListId().then(function(newId) {
+      var content = JSON.stringify({
+        Id: newId,
+        Name: name,
+        Phrases: values.join(','),
+        IsActive: true,
+        Mode: "Exchangeable",
+        Editable: true
+      });
+
+      var headers = {
+        'Content-Length': content.length,
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': self.subscriptionKey
+      };
+      
+      var options = {
+        hostname: self.endpoints.hostname,
+        path: self.endpoints.phraselists,
+        method: 'POST',
         headers: headers
       };
 

@@ -17,6 +17,7 @@
     "azure-storage": "^0.10.0",
     "bluebird": "^3.3.5",
     "botbuilder": "^0.9.1",
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "uuid": "^2.0.2"
   }
 }
